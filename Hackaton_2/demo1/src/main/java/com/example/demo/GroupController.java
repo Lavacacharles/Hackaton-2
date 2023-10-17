@@ -48,12 +48,11 @@ public class GroupController {
             return null;
     }
 
-    /*@GetMapping("/persons/{id}")
-    public Group getGroupPersonsById(@PathVariable Long id){
-        if(groupRepository.findById(id).isPresent())
-            return groupRepository.findById(id).get();
-        else
-            return null;
-    }*/
+    @GetMapping("/persons/{id}")
+    public List<PersonDto> getGroupPersons(@PathVariable Long id){
+            return groupService.gerGroupPersonsById(id);
+
+
+    }
 
 }

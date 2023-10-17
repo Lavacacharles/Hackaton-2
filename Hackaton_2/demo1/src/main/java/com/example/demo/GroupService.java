@@ -38,4 +38,31 @@ public class GroupService {
         }
         return ResponseEntity.ok("Successfully created Group");
     }
+
+    public List<PersonDto> gerGroupPersonsById(Long id) {
+        Group group = groupRepository.findById(id).get();
+        List<Person> personList = group.getPersons();
+        List<PersonDto> personDtos = new ArrayList<>();
+        for(Person person: personList){
+            PersonDto personDto = new PersonDto();
+            personDto.setGroups(getListGroups(person));
+            personDto.setName(person.getName());
+            //id
+            personDto.setId(person.getId());
+            personDtos.add(personDto);
+        }
+        return personDtos;
+    }
+
+    public List<GroupDto> getListGroups(Person person) {
+        List<GroupDto> groupDtos = new ArrayList<>();
+        for (int i = 0; i < person.getGroups().size(); i++){
+            GroupDto groupDto = new GroupDto();
+            groupDto.setName(person.getGroups().get(i).getName());
+            //id
+            groupDto.setId(person.getGroups().get(i).getId());
+            groupDtos.add(groupDto);
+        }
+        return groupDtos;
+    }
 }
