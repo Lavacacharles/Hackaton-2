@@ -9,10 +9,7 @@ import com.example.demo.domain.Person;
 import com.example.demo.domain.PersonDTO;
 import com.example.demo.domain.PersonService;
 
-// import com.example.demo.domain.Grade;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/person")
@@ -23,15 +20,15 @@ public class PersonController {
 
 
     @GetMapping
-    public ResponseEntity<List<Person>> persons() {
-        List<Person> persons = personService.getAllPersons();
+    public ResponseEntity<List<PersonDTO>> persons() {
+        List<PersonDTO> persons = personService.getAllPersons();
         return new ResponseEntity<>(persons, HttpStatus.OK);
     }
 
     @GetMapping("/{id}") //Todas las personas que estan en ese grupo
-    public ResponseEntity<Person> persons(@PathVariable Long id) {
-    Optional<Person> person = personService.getPerson(id);
-    return ResponseEntity.status(HttpStatus.OK).body(person.get());
+    public ResponseEntity<PersonDTO> persons(@PathVariable Long id) {
+    PersonDTO person = personService.getPerson(id);
+    return ResponseEntity.status(HttpStatus.OK).body(person);
     }  
 
     @GetMapping("/groups/{id}") //Todos los grupos en los que esta esa persona

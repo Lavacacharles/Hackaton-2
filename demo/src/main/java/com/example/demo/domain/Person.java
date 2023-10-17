@@ -1,24 +1,18 @@
 package com.example.demo.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
 
 @Entity
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
+@Table(name = "PERSONS_TBL")
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -27,11 +21,11 @@ public class Person {
         joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id")
         )
-    private Set<Group> groups = new HashSet<>();
+    private List<Group> groups = new ArrayList<>();
 
     Person(){}
 
-    Person(String nombre, Set<Group> grupos){
+    Person(String nombre, List<Group> grupos){
         this.name = nombre;
         this.groups = grupos;
     }
@@ -40,7 +34,7 @@ public class Person {
         this.name = nombre;
     }
 
-    public void setGroups(Set<Group> grupos){
+    public void setGroups(List<Group> grupos){
         this.groups = grupos;
     }
 
@@ -48,7 +42,7 @@ public class Person {
         return name;
     }
 
-    public Set<Group> getGroups(){
+    public List<Group> getGroups(){
         return groups;
     }    
 }

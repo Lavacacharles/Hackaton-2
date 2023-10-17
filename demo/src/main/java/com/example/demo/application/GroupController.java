@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.demo.domain.GroupRequestDTO;
-import com.example.demo.domain.GroupResponseDTO;
+import com.example.demo.domain.Group;
+import com.example.demo.domain.GroupDTO;
 import com.example.demo.domain.GroupService;
 
 import java.util.List;
@@ -14,29 +13,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/groups")
 public class GroupController {
-    private final GroupService groupService;
 
     @Autowired
-    public GroupController(GroupService groupService) {
-        this.groupService = groupService;
-    }
+    private GroupService groupService;
 
     @PostMapping
-    public ResponseEntity<GroupResponseDTO> addGroup(
-            @RequestBody final GroupRequestDTO groupRequestDto) {
-        GroupResponseDTO groupResponseDto = groupService.addGroup(groupRequestDto);
-        return new ResponseEntity<>(groupResponseDto, HttpStatus.OK);
+    public ResponseEntity<String> addGroup(@RequestBody Group group) {
+        groupService.addGroup(group);
+        return ResponseEntity.status(201).body("Created");
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupResponseDTO> getGroup(@PathVariable final Long id) {
-        GroupResponseDTO GroupResponseDto = groupService.getGroupById(id);
-        return new ResponseEntity<>(GroupResponseDto, HttpStatus.OK);
+    public ResponseEntity<GroupDTO> getOneGroup(@PathVariable Long id) {
+        GroupDTO GroupResponseDto = groupService.getGroupById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(GroupResponseDto);
     }
+//por si aca 
+//return ResponseEntity.status(HttpStatus.OK).body(GroupResponseDtos);
+//return new ResponseEntity<>(GroupResponseDtos, HttpStatus.OK);
 
     @GetMapping
-    public ResponseEntity<List<GroupResponseDTO>> getGroups() {
-        List<GroupResponseDTO> GroupResponseDtos = groupService.getGroups();
+    public ResponseEntity<List<GroupDTO>> getAllGroups() {
+        List<GroupDTO> GroupResponseDtos = groupService.getGroups();
         return new ResponseEntity<>(GroupResponseDtos, HttpStatus.OK);
     }
 }

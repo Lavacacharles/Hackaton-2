@@ -5,17 +5,16 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
+@Table(name = "GROUPS_TBL")
 public class Group {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
     @ManyToMany(mappedBy = "groups")
@@ -25,9 +24,9 @@ public class Group {
 
     }
 
-    public Group(String name, List<Person> persons) {
+    public Group(String name, List<Person> personas) {
         this.name = name;
-        this.persons = persons;
+        this.persons = personas;
     }
 
     public Long getId() {

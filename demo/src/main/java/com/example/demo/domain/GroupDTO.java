@@ -4,13 +4,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PersonDTO {
+
+public class GroupDTO {
     private String name;
-    private Set<String> liGroup = new HashSet<>();;
+    private Set<String> liGroup = new HashSet<>();
     
-    public PersonDTO(String Title, List<Group> names){
+    public GroupDTO(String Title, List<Person> names){
         this.name = Title;
-        for(Group grupo: names){
+        for(Person grupo: names){
             liGroup.add(grupo.getName());
         }
     }
@@ -18,7 +19,7 @@ public class PersonDTO {
     public String get_title(){
         return name;
     }
-    public Set<String> get_liGroup(){
+    public Set<String> liGroup(){
         return liGroup;
     }
 
